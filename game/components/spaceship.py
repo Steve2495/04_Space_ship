@@ -14,10 +14,16 @@ class Spaceship(Sprite):
         self.rect.y = self.Y_POS
         
     def move_left(self):
+        if self.rect.left == 0:
+            self.rect.x = SCREEN_WIDTH - 30
+        
         if self.rect.left > 0:
             self.rect.x = self.rect.x - 10
     
     def move_right(self):
+        if self.rect.right == SCREEN_WIDTH:
+            self.rect.x = -10
+            
         if self.rect.right < SCREEN_WIDTH:
             self.rect.x = self.rect.x + 10
     
@@ -26,7 +32,7 @@ class Spaceship(Sprite):
             self.rect.y = self.rect.y -10        
     
     def move_down(self):
-        if self.rect.y > SCREEN_HEIGHT - 3000000:
+        if self.rect.y < SCREEN_HEIGHT - 60:
             self.rect.y = self.rect.y + 10
     
     def update(self, user_input):
