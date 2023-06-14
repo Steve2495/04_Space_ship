@@ -2,20 +2,20 @@ import pygame
 import random
 
 from pygame.sprite import Sprite
-from game.utils.constants import ENEMY_1, SCREEN_HEIGHT, SCREEN_WIDTH
+from game.utils.constants import SCREEN_HEIGHT, SCREEN_WIDTH
 
 class Enemy(Sprite):
+    scale_enm = [80, 120]
     Y_POS = 20
-    X_POS_LIST = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550]
+    X_POS_LIST = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600]
     SPEED_X = 5
     SPEED_Y = 1
     MOV_X = {0: 'left', 1: 'right'}
     
-    def __init__(self):
-        self.image = ENEMY_1
-        self.image = pygame.transform.scale(self.image, (40, 60))
+    def __init__(self, image):
+        self.image = pygame.transform.scale(image, (self.scale_enm[0], self.scale_enm[1]))
         self.rect = self.image.get_rect()
-        self.rect.x = self.X_POS_LIST[random.randint(0,10)]
+        self.rect.x = self.X_POS_LIST[random.randint(0,len(self.X_POS_LIST) - 1)]
         self.rect.y = self.Y_POS 
         self.type = 'enemy'
         
@@ -28,7 +28,7 @@ class Enemy(Sprite):
         
     def change_movement_x(self):
         self.index += 1
-        if (self.index >= self.move_x_for and self.movement_x == 'right') or (self.rect.x >= SCREEN_WIDTH -40):
+        if (self.index >= self.move_x_for and self.movement_x == 'right') or (self.rect.x >= SCREEN_WIDTH - self.scale_enm[0]):
             self.movement_x = 'left'
         elif (self.index >= self.move_x_for and self.movement_x == 'left') or (self.rect.x <= 10):    
             self.movement_x = 'right'
