@@ -6,6 +6,7 @@ from game.components.enemies.enemy_manager import EnemyManager
 from game.components.bullets.bullet_manager import BulletManager
 
 class Game:
+    CURRENT_LEVEL= int(input("enter desired game level: "))
     def __init__(self):
         pygame.init()
         pygame.display.set_caption(TITLE)
@@ -37,8 +38,8 @@ class Game:
     
     def update(self):
         user_input = pygame.key.get_pressed()
-        self.player.update(user_input)
-        self.enemy_manager.update(self)
+        self.player.update(user_input, self)
+        self.enemy_manager.update(self, self.CURRENT_LEVEL)
         self.bullet_manager.update(self)
     
     def draw(self):
