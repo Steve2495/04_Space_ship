@@ -3,7 +3,6 @@ import random
 
 from pygame.sprite import Sprite
 from game.utils.constants import ENEMY_1, ENEMY_2,ENEMY_3, SCREEN_HEIGHT, SCREEN_WIDTH
-
 from game.components.bullets.bullet import Bullet
 
 class Enemy(Sprite):
@@ -19,7 +18,7 @@ class Enemy(Sprite):
         self.image = self.IMAGE[image]
         self.image = pygame.transform.scale(self.image, (self.scale_enm[0], self.scale_enm[1]))
         self.rect = self.image.get_rect()
-        self.rect.x = self.X_POS_LIST[random.randint(0,len(self.X_POS_LIST) - 1)]
+        self.rect.x = self.X_POS_LIST[random.randint(0,10)]
         self.rect.y = self.Y_POS 
         self.type = 'enemy'
         

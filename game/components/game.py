@@ -4,7 +4,6 @@ from game.utils.constants import  BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, 
 from game.components.enemies.enemy_manager import EnemyManager
 
 from game.components.bullets.bullet_manager import BulletManager
-from game.components.bullets.bullet import Bullet, BULLET_ENEMY
 
 class Game:
     def __init__(self):
@@ -13,7 +12,6 @@ class Game:
         pygame.display.set_icon(ICON)
         self.screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
-        self.bullet_scale = pygame.transform.scale(BULLET_ENEMY, (9,32))
         
         self.playing = False
         self.game_speed = 10
@@ -50,7 +48,7 @@ class Game:
         self.draw_background()
         self.player.draw(self.screen)
         self.enemy_manager.draw(self.screen)
-        self.bullet_manager.draw(self.screen, self.bullet_scale)
+        self.bullet_manager.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
         

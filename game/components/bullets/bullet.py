@@ -9,7 +9,7 @@ class Bullet(Sprite):
     SPEED = 20
     BULLET_SIZE = pygame.transform.scale(BULLET, (10,20))
     BULLET_SIZE_ENEMY = pygame.transform.scale(BULLET_ENEMY, (9,32))
-    BULLETS = {'player': BULLET, 'enemy': BULLET_ENEMY}
+    BULLETS = {'player': BULLET_SIZE, 'enemy': BULLET_SIZE_ENEMY}
     
     def __init__(self, spaceship):
         self.image = self.BULLETS[spaceship.type]
@@ -25,8 +25,7 @@ class Bullet(Sprite):
         if self.rect.y >= SCREEN_HEIGHT:
             bullets.remove(self)
     
-    def draw(self, screen, bullet_scale):
-        bullet_scale = pygame.transform.scale(BULLET_ENEMY, (9,32))
+    def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
         
