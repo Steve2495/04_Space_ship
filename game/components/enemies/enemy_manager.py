@@ -6,12 +6,12 @@ class EnemyManager:
     def __init__(self):
         self.enemies = []
         
-    def update(self, game, CURRENT_LEVEL):
-        self.add_enemy(CURRENT_LEVEL)
+    def update(self, game, ENEMIES_PER_LEVEL):
+        self.add_enemy(ENEMIES_PER_LEVEL)
         for enemy in self.enemies:
             enemy.update(self.enemies, game)
         
-    def add_enemy(self, CURRENT_LEVEL):
+    def add_enemy(self, ENEMIES_PER_LEVEL):
         enemy_type = random.randint(1,3)
         if enemy_type == 1:
             enemy = Enemy()
@@ -26,7 +26,7 @@ class EnemyManager:
             move_x_for = [60,100]
             enemy = Enemy(enemy_type, x_speed, y_speed, move_x_for)
             
-        if len(self.enemies) < CURRENT_LEVEL:
+        if len(self.enemies) < ENEMIES_PER_LEVEL:
             self.enemies.append(enemy)
         
     def draw(self, screen):

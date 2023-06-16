@@ -1,5 +1,4 @@
 import pygame
-import time
 from game.components.spaceship import Spaceship
 from game.utils.constants import  BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE
 from game.components.enemies.enemy_manager import EnemyManager
@@ -7,7 +6,7 @@ from game.components.bullets.bullet_manager import BulletManager
 from game.components.menu import Menu
 
 class Game:
-    CURRENT_LEVEL= int(input("enter desired game level: "))
+
     def __init__(self):
         self.scores = []
         self.best_score = 0
@@ -29,6 +28,8 @@ class Game:
         self.score = 0
         self.death_count = 0
         self.menu = Menu('Press any key to start...', self.screen)
+        self.CURRENT_LEVEL= 1
+        self.ENEMIES_PER_LEVEL = 10
         
     def execute(self):
         self.running = True
@@ -41,6 +42,8 @@ class Game:
     def run(self):
         pygame.time.delay(120)
         self.enemy_manager.reset()
+        self.CURRENT_LEVEL= 1
+        self.ENEMIES_PER_LEVEL = 10
         self.score = 0
         
         self.playing = True
@@ -57,7 +60,7 @@ class Game:
     def update(self):
         user_input = pygame.key.get_pressed()
         self.player.update(user_input, self)
-        self.enemy_manager.update(self, self.CURRENT_LEVEL)
+        self.enemy_manager.update(self, self.ENEMIES_PER_LEVEL)
         self.bullet_manager.update(self)
     
     def draw(self):
@@ -69,6 +72,7 @@ class Game:
         self.enemy_manager.draw(self.screen)
         self.bullet_manager.draw(self.screen)
         self.draw_score()
+        self.draw_lvl()
         pygame.display.update()
         pygame.display.flip()
         
@@ -94,7 +98,8 @@ class Game:
             ("Game over. Press any key to restart...", 0),
             (f'Your score: {self.score}', 50),
             (f'Highest score: {self.best_score}', 100),
-            (f'Total deaths: {self.death_count}', 150)
+            (f'Total deaths: {self.death_count}', 150),
+            (f'Level reached: {self.CURRENT_LEVEL}', 200)
             ]
             for message, margin in self.messages:
                 self.menu.update_message(message, margin)
@@ -108,6 +113,10 @@ class Game:
         self.score +=1
         self.scores.append(self.score)
         self.best_score = max(self.scores)
+        if self.score == self.ENEMIES_PER_LEVEL:
+            self.CURRENT_LEVEL += 1
+            self.ENEMIES_PER_LEVEL += 7
+            
         
     def draw_score(self):
         font = pygame.font.Font(FONT_STYLE, 30)
@@ -115,3 +124,10 @@ class Game:
         text_rect = text.get_rect()
         text_rect.center = (SCREEN_WIDTH - 100, 50) 
         self.screen.blit(text, text_rect)   
+        
+    def draw_lvl(self):
+        font = pygame.font.Font(FONT_STYLE, 30)
+        text = font.render(f'Current level: {self.CURRENT_LEVEL}', True, (255,255,255)) 
+        text_rect = text.get_rect()
+        text_rect.center = (SCREEN_WIDTH - 150, SCREEN_HEIGHT -20) 
+        self.screen.blit(text, text_rect) 

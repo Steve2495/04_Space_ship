@@ -1,5 +1,4 @@
-import pygame
-from game.components.enemies.enemy import Enemy
+import pygame 
 
 class BulletManager:
     def __init__(self):
@@ -35,7 +34,7 @@ class BulletManager:
             bullet.draw(screen)
             
     def add_bullet(self, bullet, game):
-        if bullet.owner == 'enemy' and len(self.enemy_bullets) < game.CURRENT_LEVEL // 2:
+        if bullet.owner == 'enemy': # and len(self.enemy_bullets) < game.ENEMIES_PER_LEVEL // 2:
             for enemy in game.enemy_manager.enemies:
                 if enemy.num_shoots == 1:
                     self.enemy_bullets.append(bullet)
