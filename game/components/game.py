@@ -39,6 +39,7 @@ class Game:
         pygame.quit()
     
     def run(self):
+        pygame.time.delay(120)
         self.enemy_manager.reset()
         self.score = 0
         
@@ -86,21 +87,19 @@ class Game:
         self.menu.reset_screen_color(self.screen)
         half_screen_height = SCREEN_HEIGHT //2
         half_screen_width = SCREEN_WIDTH //2
-        
         if self.death_count == 0:
             self.menu.draw(self.screen)
         else:
-            self.menu.update_message("Game over. Press any key to restart...", 0)
-            self.menu.draw(self.screen)
-            self.menu.update_message(f'Your score: {self.score}', 50)
-            self.menu.draw(self.screen)
-            self.menu.update_message(f'Highest score: {self.best_score}', 100)
-            self.menu.draw(self.screen)
-            self.menu.update_message(f'Total deaths: {self.death_count}', 150)
-            self.menu.draw(self.screen)
+            self.messages = [
+            ("Game over. Press any key to restart...", 0),
+            (f'Your score: {self.score}', 50),
+            (f'Highest score: {self.best_score}', 100),
+            (f'Total deaths: {self.death_count}', 150)
+            ]
+            for message, margin in self.messages:
+                self.menu.update_message(message, margin)
+                self.menu.draw(self.screen)
 
-            
-            
         icon = pygame.transform.scale(ICON, (80,120))
         self.screen.blit(icon, (half_screen_width - 50, half_screen_height -150))
         self.menu.update(self)

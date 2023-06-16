@@ -11,7 +11,7 @@ class BulletManager:
             bullet.update(self.enemy_bullets)
             
             if bullet.rect.colliderect(game.player.rect) and bullet.owner == 'enemy':
-                self.enemy_bullets.remove(bullet)
+                self.enemy_bullets = []
                 game.playing = False
                 print("GAME OVER")
                 pygame.time.delay(1000)
@@ -34,9 +34,11 @@ class BulletManager:
         for bullet in self.bullets:
             bullet.draw(screen)
             
-    def add_bullet(self, bullet):
-        if bullet.owner == 'enemy' and len(self.enemy_bullets) < 1:
-            self.enemy_bullets.append(bullet)
+    def add_bullet(self, bullet, game):
+        if bullet.owner == 'enemy' and len(self.enemy_bullets) < game.CURRENT_LEVEL // 2:
+            for enemy in game.enemy_manager.enemies:
+                if enemy.num_shoots == 1:
+                    self.enemy_bullets.append(bullet)
         if bullet.owner == 'player':
             self.bullets.append(bullet)
     
