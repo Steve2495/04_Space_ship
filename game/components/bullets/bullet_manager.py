@@ -15,6 +15,7 @@ class BulletManager:
                 game.playing = False
                 print("GAME OVER")
                 pygame.time.delay(1000)
+                game.death_count += 1
                 break
             
         for bullet in self.bullets:
@@ -23,6 +24,7 @@ class BulletManager:
                 if bullet.rect.colliderect(enemy.rect) and bullet.owner == 'player':
                     self.bullets.remove(bullet)
                     game.enemy_manager.enemies.remove(enemy)
+                    game.update_score()
                     break
         
     def draw(self, screen):
