@@ -9,6 +9,8 @@ from game.components.menu import Menu
 class Game:
     CURRENT_LEVEL= int(input("enter desired game level: "))
     def __init__(self):
+        self.scores = []
+        self.best_score = 0
         pygame.init()
         pygame.display.set_caption(TITLE)
         pygame.display.set_icon(ICON)
@@ -88,8 +90,15 @@ class Game:
         if self.death_count == 0:
             self.menu.draw(self.screen)
         else:
-            self.menu.update_message("A MESSAGE")
+            self.menu.update_message("Game over. Press any key to restart...", 0)
             self.menu.draw(self.screen)
+            self.menu.update_message(f'Your score: {self.score}', 50)
+            self.menu.draw(self.screen)
+            self.menu.update_message(f'Highest score: {self.best_score}', 100)
+            self.menu.draw(self.screen)
+            self.menu.update_message(f'Total deaths: {self.death_count}', 150)
+            self.menu.draw(self.screen)
+
             
             
         icon = pygame.transform.scale(ICON, (80,120))
@@ -98,6 +107,8 @@ class Game:
         
     def update_score(self):
         self.score +=1
+        self.scores.append(self.score)
+        self.best_score = max(self.scores)
         
     def draw_score(self):
         font = pygame.font.Font(FONT_STYLE, 30)
