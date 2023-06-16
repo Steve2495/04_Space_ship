@@ -29,13 +29,12 @@ class Game:
         self.menu = Menu('Press any key to start...', self.screen)
         
     def execute(self):
-        self.run()
         self.running = True
         while self.running:
             if not self.playing:
                 self.show_menu()
-                pygame.display.quit()
-                pygame.quit()
+        pygame.display.quit()
+        pygame.quit()
     
     def run(self):
         self.enemy_manager.reset()
