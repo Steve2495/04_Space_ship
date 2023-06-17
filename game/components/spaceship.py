@@ -1,7 +1,7 @@
 import pygame
 import random
 from pygame.sprite import Sprite
-from game.utils.constants import SPACESHIP, SCREEN_HEIGHT, SCREEN_WIDTH
+from game.utils.constants import SPACESHIP, DEFAULT_TYPE , SCREEN_HEIGHT, SCREEN_WIDTH
 
 from game.components.bullets.bullet import Bullet
 
@@ -17,6 +17,9 @@ class Spaceship(Sprite):
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
         self.type = 'player'
+        self.has_power_up = False
+        self.power_time_up = 0
+        self.power_up_type = DEFAULT_TYPE
         
         self.shooting_time = random.randint(30,50)
         
@@ -64,5 +67,9 @@ class Spaceship(Sprite):
         
     def repaint(self, screen):
         screen.blit(self.image_2, (self.rect.x, self.rect.y))
+        
+    def set_image(self, size = (40,60), image = SPACESHIP):
+        self.image = image
+        self.image = pygame.transform.scale(self.image, size)
         
     

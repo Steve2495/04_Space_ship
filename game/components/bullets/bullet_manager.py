@@ -1,9 +1,12 @@
 import pygame 
+from game.utils.constants import SHIELD_TYPE, SPACESHIP
+from game.components.power_ups.power_up_manager import PowerUpManager
 
 class BulletManager:
     def __init__(self):
         self.bullets = []
         self.enemy_bullets = []
+        self.power_up_manager = PowerUpManager()
         
     def update(self, game):
         for bullet in self.enemy_bullets:
@@ -11,10 +14,21 @@ class BulletManager:
             
             if bullet.rect.colliderect(game.player.rect) and bullet.owner == 'enemy':
                 self.enemy_bullets = []
-                game.playing = False
-                print("GAME OVER")
-                pygame.time.delay(1000)
-                game.death_count += 1
+                
+                if game.player.power_up_type == SHIELD_TYPE:
+                    bullets_copy = list(self.bullets)  # Crear una copia de la lista de balas
+                    for bullet in bullets_copy:
+                        self.power_up_manager.reset()
+                        self.bullets.remove(bullet)
+                        if game.player.power_time_up == 0:
+                            game.player.set_image((40,60), SPACESHIP)
+                
+                elif game.player.power_up_type != SHIELD_TYPE:
+                    game.playing = False
+                    print("GAME OVER")
+                    pygame.time.delay(1000)
+                    game.death_count += 1
+
                 break
             
         for bullet in self.bullets:
@@ -38,6 +52,9 @@ class BulletManager:
             for enemy in game.enemy_manager.enemies:
                 if enemy.num_shoots == 1:
                     self.enemy_bullets.append(bullet)
+                    if game.player.power_up_type == SHIELD_TYPE:
+                        for bullet in self.bullets:
+                            self.bullets.remove(bullet)
         if bullet.owner == 'player':
             self.bullets.append(bullet)
     
