@@ -26,6 +26,7 @@ class PowerUpManager:
                 power_up.start_time = pygame.time.get_ticks()
                 game.player.power_up_type = SHIELD_TYPE
                 game.player.power_time_up = power_up.start_time + (self.duration * 1000)
+                game.player.has_power_up = True
                 #print(game.player.power_time_up)
                 game.player.set_image((65,75), SPACESHIP_SHIELD)
                 self.power_ups.remove(power_up)

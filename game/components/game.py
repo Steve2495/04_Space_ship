@@ -84,12 +84,13 @@ class Game:
     
     def draw_power_up_time(self):
         if self.player.has_power_up:
-            time_to_show = round((self.player.power_up_type - pygame.time.get_ticks()) / 1000,2)
+            time_to_show = round((self.player.power_time_up - pygame.time.get_ticks()) / 1000,2)
             if time_to_show >= 0:
-                self.menu.draw(self.screen, f'{self.player.power_up_type.capitalize()} is enabled for {time_to_show} seconds', 500, 50, (255, 255, 255))
+                self.menu.draw(self.screen)
+                self.menu.update_message(f'{self.player.power_up_type.capitalize()} is enabled for {time_to_show} seconds',250, (255,255,255))
             else:
                 self.player.has_power_up = False
-                self.player.power_time_up = DEFAULT_TYPE
+                self.player.power_time_up = pygame.time.get_ticks()
                 self.player.set_image()
             
     def draw_background(self):
@@ -118,7 +119,7 @@ class Game:
             (f'Level reached: {self.CURRENT_LEVEL}', 200)
             ]
             for message, margin in self.messages:
-                self.menu.update_message(message, margin)
+                self.menu.update_message(message, margin, (0,0,0))
                 self.menu.draw(self.screen)
 
         icon = pygame.transform.scale(ICON, (80,120))
