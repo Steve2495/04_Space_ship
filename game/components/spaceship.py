@@ -20,6 +20,7 @@ class Spaceship(Sprite):
         self.has_power_up = False
         self.power_time_up = 0
         self.power_up_type = DEFAULT_TYPE
+        self.hearts = 1
         
         self.shooting_time = random.randint(30,50)
         

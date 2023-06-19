@@ -1,10 +1,11 @@
 import pygame
 from game.components.spaceship import Spaceship
-from game.utils.constants import  BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE, DEFAULT_TYPE
+from game.utils.constants import  BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE, DEFAULT_TYPE,NEW_GAME,HEART
 from game.components.enemies.enemy_manager import EnemyManager
 from game.components.bullets.bullet_manager import BulletManager
 from game.components.menu import Menu
 from game.components.power_ups.power_up_manager import PowerUpManager
+from game.components.power_ups.heart import Heart
 
 class Game:
 
@@ -25,6 +26,7 @@ class Game:
         self.player = Spaceship()
         self.enemy_manager = EnemyManager()
         self.bullet_manager = BulletManager()
+        self.heart = Heart
         self.running = False
         self.score = 0
         self.death_count = 0
@@ -37,6 +39,7 @@ class Game:
         self.running = True
         while self.running:
             if not self.playing:
+                self.player.hearts = 1
                 self.show_menu()
         pygame.display.quit()
         pygame.quit()
@@ -76,9 +79,11 @@ class Game:
         self.enemy_manager.draw(self.screen)
         self.bullet_manager.draw(self.screen)
         self.power_up_manager.draw(self.screen)
+        self.draw_heart()
         self.draw_power_up_time()
         self.draw_score()
         self.draw_lvl()
+        
         pygame.display.update()
         pygame.display.flip()
     
@@ -148,3 +153,13 @@ class Game:
         text_rect = text.get_rect()
         text_rect.center = (SCREEN_WIDTH - 150, SCREEN_HEIGHT -20) 
         self.screen.blit(text, text_rect) 
+        
+    def draw_heart(self, margin = (SCREEN_WIDTH -80, SCREEN_HEIGHT -80)):
+            screen = self.screen
+            heart = pygame.transform.scale(HEART, (30,30))
+            font = pygame.font.Font(FONT_STYLE, 20)
+            text = font.render(f'= {self.player.hearts}', True, (255,255,255)) 
+            text_rect = text.get_rect()
+            text_rect.center = (SCREEN_WIDTH - 30, SCREEN_HEIGHT -65) 
+            self.screen.blit(text, text_rect)
+            screen.blit(heart, margin)

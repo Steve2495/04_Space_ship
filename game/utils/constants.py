@@ -9,16 +9,21 @@ FPS = 30
 IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
 # Assets Constants
+NEW_GAME = pygame.image.load(os.path.join(IMG_DIR, 'Other/new_game.jpg'))
+
 ICON = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship.png"))
 
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 
-BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
+HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/Heart_2.png'))
 
-HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
+HEART = pygame.transform.scale(HEART,(50, 43))
+
+BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = 'shield'
+HEART_TYPE = 'heart'
 
 SPACESHIP = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship.png"))
 SPACESHIP_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship_shield.png"))

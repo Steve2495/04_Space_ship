@@ -14,7 +14,7 @@ class BulletManager:
             
             if bullet.rect.colliderect(game.player.rect) and bullet.owner == 'enemy':
                 self.enemy_bullets = []
-                
+                print(game.player.hearts)
                 if game.player.power_up_type == SHIELD_TYPE:
                     bullets_copy = list(self.bullets)  # Crear una copia de la lista de balas
                     for bullet in bullets_copy:
@@ -23,11 +23,14 @@ class BulletManager:
                         if game.player.power_time_up == 0:
                             game.player.set_image((40,60), SPACESHIP)
                 
-                elif game.player.power_up_type != SHIELD_TYPE:
-                    game.playing = False
-                    print("GAME OVER")
-                    pygame.time.delay(1000)
-                    game.death_count += 1
+                if game.player.power_up_type != SHIELD_TYPE:
+                    game.player.hearts -= 1
+                    if game.player.hearts == 0:
+                        game.player.hearts = 1
+                        game.playing = False
+                        print("GAME OVER")
+                        pygame.time.delay(1000)
+                        game.death_count += 1
 
                 break
             
