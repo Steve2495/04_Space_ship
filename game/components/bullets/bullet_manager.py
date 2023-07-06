@@ -16,7 +16,7 @@ class BulletManager:
                 self.enemy_bullets = []
                 print(game.player.hearts)
                 if game.player.power_up_type == SHIELD_TYPE:
-                    bullets_copy = list(self.bullets)  # Crear una copia de la lista de balas
+                    bullets_copy = list(self.bullets)
                     for bullet in bullets_copy:
                         self.power_up_manager.reset()
                         self.bullets.remove(bullet)
